@@ -1,9 +1,12 @@
+require_relative "utils"
+
 class Category
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :slug
   @@instance_collector = Array.new
 
   def initialize(name, id=nil)
     @name = name
+    @slug = make_slug(name)
 
     @@instance_collector << self
     @id = @@instance_collector.count
@@ -27,28 +30,20 @@ class Category
 
 
   def self.get(id)
-    found = nil
     for category in @@instance_collector
       if category.id == id
-        found = category
+        return category
       end
     end
-    found
   end
 
   def self.get_or_create(name)
-    found = nil
     for category in @@instance_collector
       if category.name == name
-        found = category
+        return category
       end
     end
-    found
 
-    if not found
-      found = Category.new(name)
-    end
-
-    found
+    return Category.new(name)
   end
 end

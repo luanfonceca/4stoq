@@ -21,6 +21,13 @@ class TestCategory < Test::Unit::TestCase
     )
   end
 
+  def test_slug
+    assert_equal(
+      @category.slug,
+      "category-name"
+    )
+  end
+
   def test_all
     Category.new(
       "Second Category"

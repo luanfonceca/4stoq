@@ -1,7 +1,6 @@
 require_relative "product"
 require_relative "category"
 
-
 class ProductActions
   def choices
     """\
@@ -65,7 +64,7 @@ class ProductActions
     puts "Updated #{@product}"
   end
 
-  def link_category_to_product
+  def link_category
     puts "Get Product by his ID: "
     @product = Product.get(
       gets.chomp.to_i
@@ -79,7 +78,7 @@ class ProductActions
     puts "Updated #{@product}"
   end
 
-  def unlink_category_to_product
+  def unlink_category
     puts "Get Product by his ID: "
     @product = Product.get(
       gets.chomp.to_i
@@ -209,137 +208,6 @@ class Actions
 +--------------------------------+
     \n\n"""
   end
-
-  def add_product
-    puts """
-+--------------------------------+
-|          ADD PRODUCT           |
-+--------------------------------+
-"""
-    puts "Name: "
-    @name = gets.chomp
-    puts "Description: "
-    @description = gets.chomp
-    puts "Category: "
-    @category = Category.get_or_create(
-      gets.chomp
-    )
-
-    @product = Product.new(
-      @name, @description
-    )
-    @product.categories.push(
-      @category
-    )
-    puts "Created #{@product}"
-  end
-
-  def edit_product
-    puts """
-+--------------------------------+
-|          EDIT PRODUCT          |
-+--------------------------------+
-"""
-    puts "Get Product by his ID: "
-    @product = Product.get(
-      gets.chomp.to_i
-    )
-
-    puts "Name: (Keep blank to not change.)"
-    @new_name = gets.chomp
-    if @new_name.length > 0
-      @product.name = @new_name
-    end
-
-    puts "Description: (Keep blank to not change.)"
-    @new_description = gets.chomp
-    if @new_description.length > 0
-      @product.description = @new_description
-    end
-
-    puts "Updated #{@product}"
-  end
-
-  def delete_product
-    puts """
-+--------------------------------+
-|         DELETE PRODUCT         |
-+--------------------------------+
-"""
-    puts "Get Product by his ID: "
-    @product = Product.get(
-      gets.chomp.to_i
-    )
-    Product.del(@product.id)
-    puts "Deleted #{@product}"
-  end
-
-  def list_products
-    puts """
-+--------------------------------+
-|          LIST PRODUCTS         |
-+--------------------------------+
-"""
-    for product in Product.all
-      puts product
-    end
-  end
-
-  def add_category
-    puts """
-+--------------------------------+
-|          ADD CATEGORY          |
-+--------------------------------+
-"""
-    puts "Name: "
-    @category = Category.new(
-      gets.chomp
-    )
-    puts "Created #{@category}"
-  end
-
-  def edit_category
-    puts """
-+--------------------------------+
-|          EDIT CATEGORY         |
-+--------------------------------+
-"""
-    puts "Get Category by his ID: "
-    @category = Category.get(
-      gets.chomp.to_i
-    )
-
-    puts "New Name: "
-    @new_name = gets.chomp
-    @category.name = @new_name
-
-    puts "Updated #{@category}"
-  end
-
-  def delete_category
-    puts """
-+--------------------------------+
-|         DELETE CATEGORY         |
-+--------------------------------+
-"""
-    puts "Get Category by his ID: "
-    @category = Category.get(
-      gets.chomp.to_i
-    )
-    Category.del(@category.id)
-    puts "Deleted #{@category}"
-  end
-
-  def list_categories
-    puts """
-+--------------------------------+
-|        LIST CATEGORIES         |
-+--------------------------------+
-"""
-    for category in Category.all
-      puts category
-    end
-  end
 end
 
 class Menu
@@ -360,9 +228,9 @@ class Menu
       when 3
         actions.product_actions.delete
       when 4
-        actions.product_actions.link_category_to_product
+        actions.product_actions.link_category
       when 5
-        actions.product_actions.unlink_category_to_product
+        actions.product_actions.unlink_category
       when 6
         actions.product_actions.list
       when 7

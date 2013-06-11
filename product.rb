@@ -1,12 +1,14 @@
 require_relative "category"
+require_relative "utils"
 
 class Product
-  attr_accessor :id, :name, :description, :categories
+  attr_accessor :id, :name, :slug, :description, :categories
   attr_reader :categories
   @@instance_collector = Array.new
 
   def initialize(name, description, id=nil)
     @name = name
+    @slug = make_slug(name)
     @description = description
     @categories = Array.new
 

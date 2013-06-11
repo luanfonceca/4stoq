@@ -26,6 +26,13 @@ class TestProduct < Test::Unit::TestCase
     )
   end
 
+  def test_slug
+    assert_equal(
+      @product.slug,
+      "product-name"
+    )
+  end
+
   def test_all
     Product.new(
       "Second Product", "Product description"
